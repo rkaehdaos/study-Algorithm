@@ -57,11 +57,43 @@ with open('./resource/review.txt', 'r') as f6:
     c6 = f6.readlines()
     print(c6)  # 모든 문장을 \n 포함해서 리스트로 가지고 있음
     for c in c6:
-        print(c, end=' ***** ') #출력 살펴볼것.. \n뒤로 나와서 *****가 앞으로 출력
+        print(c, end=' ***** ')  # 출력 살펴볼것.. \n뒤로 나와서 *****가 앞으로 출력
 
+print('------------------------------')
+print('------------------------------')
 
 # ex 7
-with open('./resource/review.txt', 'r') as f7:
-    pass
+score = []
+with open('./resource/score.txt', 'r') as f7:
+    for l7 in f7:
+        score.append(int(l7))  # 파일은 무조건 문자열 취급 하므로 형변환 필요
+    print(score)
+print('Average : {:6.3}'.format(sum(score) / len(score)))
 
+# 파일 쓰기
 
+# ex1
+with open('./resource/text1.txt', 'w', encoding='utf-8') as f:
+    f.write(('Nice맨\n'))
+
+# ex2 : a는 append
+with open('./resource/text1.txt', 'a', encoding='utf-8') as f:
+    f.write(('Good맨\n'))
+
+# ex3
+from random import randint
+
+with open('./resource/text2.txt', 'w', encoding='utf-8') as f:
+    for cnt in range(6):
+        f.write(str(randint(1, 50)))
+        f.write('\n')
+
+# ex4
+with open('./resource/text3.txt', 'w', encoding='utf-8') as f:
+    list = ['Kim\n', 'Park\n', 'Cho\n']
+    f.writelines(list)
+
+# ex5
+# print를 이용한 파일쓰기
+with open('./resource/text4.txt', 'w', encoding='utf-8') as f:
+    print('test 테스트용', file=f)
