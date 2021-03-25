@@ -44,10 +44,11 @@ with open('./resource/sample1.csv', 'r') as f:
 w=[[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15],[16,17,18]]
 # 처음쓸때 newline에서 \n제거하는 것이 리소스 제거에 효율적
 # 10만라인이 20만라인이 되는 것을 막을 수 있음
+
 with open('./resource/sample3.csv','w', newline='') as f:
     #
     wt = csv.writer(f)
-    for v in w:
+    for v in w: # 순회하면서 하기 :특정 조건을 필터링 필요
         print(v)
         wt.writerow(v)  # \n넣어줌
 
@@ -56,3 +57,28 @@ with open('./resource/sample3.csv','w', newline='') as f:
 with open('./resource/sample4.csv','w', newline='') as f:
     wt = csv.writer(f)
     wt.writerows(w) # 처리가 필요 없는 경우 한번에 쓸 수 있음
+
+
+# excel 읽기 XSL, XLSX
+# 엑셀을 지원하는 패키지들
+# openpyxl, xlsxwriter, xlrd, xlwt, xlutils
+# 주로 pandas 많이 사용(가장 많이 사용하는 openpyxl, xlrd를 내부적으로 사용)
+# pip install xlrd
+# pip install openpyxl
+# pip install pandas
+import pandas as pd
+# sheetname='시트네임'또는 숫자,header=헤더로 쓸 행, skiprow = 가져오지 않을 행
+xlsx = pd.read_excel('./resource/sample.xlsx')
+# 상위 데이터 확인 : 첫 5개만 보기
+print(xlsx.head())
+
+# 하위 데이터 확인 # 하위 5개
+print(xlsx.tail())
+
+# 구조 : 행, 열
+print(xlsx.shape)
+
+# excel or csv 다시 쓰기
+# index : 첫행에 숫자 넣어주는거
+xlsx.to_excel('./resource/result.xlsx', index=False)
+xlsx.to_csv('./resource/result.csv', index=True)
