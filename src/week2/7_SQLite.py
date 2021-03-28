@@ -23,6 +23,10 @@ conn = sqlite3.connect('./resource/database.db', isolation_level=None)
 # cursor 얻기
 c = conn.cursor()
 print(type(c))
+
+# drop table if iexists
+c.execute('DROP TABLE IF EXISTS users  ')
+
 # 테이블 생성
 # filed type : TEXT, NUMERIC, INTEGER, REAL, BLOB
 c.execute('CREATE TABLE IF NOT EXISTS users(\
@@ -32,4 +36,42 @@ c.execute('CREATE TABLE IF NOT EXISTS users(\
         phone TEXT,\
         website TEXT,\
         regdate TEXT)')
-# 테이블 삽입
+
+# data 삽입
+# ''안에서 문자열은 ""로 묶을것 (아니면 반대로 하던지)
+# nowdatetime : 넣으면 문자열이므로 파라미터 치환 필요
+print(type(nowDatetime))
+print(type((nowDatetime)))
+print(type((nowDatetime,)))  # tuple
+
+# 모든 data 순서대로 insert
+c.execute('INSERT INTO users VALUES(\
+    1,"Kim","Kim@naver.com","010-1234-1234","kim.com",?)', (nowDatetime,))
+# 다른 방법
+c.execute('INSERT INTO users(id,username,email,phone,website,regdate) VALUES(?,?,?,?,?,?)',
+          (2,
+          "Park",
+          "Park@naver.com",
+          "010-0000-0000",
+          "Park.net",
+          nowDatetime,))
+
+# 복수 삽입(튜플, 리스트)
+userList=(
+    (3,"Yoo","Yoo@naver.com","010-0000-0000","Yoo.net",nowDatetime,),
+    (4, "Lee", "Lee@naver.com", "010-0000-0000", "Lee.net", nowDatetime,),
+    (5, "Cho", "Cho@naver.com", "010-0000-0000", "Cho.net", nowDatetime,)
+)
+c.executemany('INSERT INTO users(id,username,email,phone,website,regdate) VALUES(?,?,?,?,?,?)',userList)
+
+# 데이터 삭제
+# c.execute('DELETE FROM users') # 작동함
+# conn.execute('DELETE FROM users') # 작동함
+# print('Delete rows : ', conn.execute('DELETE FROM users').rowcount)
+
+
+# 커밋 : DB Isolatiaon_level = none  -> 무조건 반영 , 오토 커밋
+# conn.commit()
+# conn.rollback()
+
+conn.close()
