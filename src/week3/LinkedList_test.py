@@ -22,3 +22,10 @@ class NodeMgmt:  # Node 관리
         while node:
             print(node.data)
             node = node.next
+
+# Test
+linkedlist1 = NodeMgmt(0)
+linkedlist1.desc()
+for data in range(1, 10):
+    linkedlist1.add(data)
+linkedlist1.desc()
