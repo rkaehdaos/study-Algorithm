@@ -44,10 +44,18 @@ class NodeMgmt:  # Node 관리
                     temp=node.next
                     node.next=node.next.next
                     del temp
+                    pass
                 else:
                     node=node.next
-        return
 
+
+    def search(self,data):
+        node=self.head
+        while node:
+            if node.data==data:
+                return node
+            else:
+                node=node.next
 
 # Test
 linkedlist1 = NodeMgmt(0)
@@ -60,6 +68,8 @@ print('--------------------------------------------')
 linkedlist1.delete(5)
 linkedlist1.desc()
 print('--------------------------------------------')
-
 linkedlist1.delete(0)
 linkedlist1.desc()
+print('--------------------------------------------')
+testnode=linkedlist1.search(7)
+print(testnode.data)
