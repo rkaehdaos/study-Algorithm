@@ -27,6 +27,7 @@ class NodeMgmt:  # Node 관리
     ## 1. head
     ## 2. 중간
     ## 3. 끝
+    ## 결과적으로는 2,3을 한번에 처리 가능함
     def delete(self, data):
         if self.head=='':
             print('node가 없음')
@@ -51,9 +52,14 @@ class NodeMgmt:  # Node 관리
 # Test
 linkedlist1 = NodeMgmt(0)
 linkedlist1.desc()
+print('----------------------')
 for data in range(1, 10):
     linkedlist1.add(data)  # 맨끝에 추가
 linkedlist1.desc()  # 데이터 순회하며 출력
 print('--------------------------------------------')
 linkedlist1.delete(5)
+linkedlist1.desc()
+print('--------------------------------------------')
+
+linkedlist1.delete(0)
 linkedlist1.desc()
