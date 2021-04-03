@@ -26,16 +26,35 @@ class LinkedQueue:
         self.rear = None
 
     def is_empty(self):
-        pass
+        if self.front == None:
+            return True
+        return False
 
     def put(self, data):
-        pass
+        if self.front == None:
+            self.front = Node(data)
+            self.rear = self.front
+        else:
+            newNode = Node(data)
+            newNode.prev = self.rear
+            self.rear.next = newNode
+            self.rear = newNode
 
     def get(self):
-        pass
+        if self.front == None:
+            return None
+        else:
+            data = self.front.data
+            temp = self.front
+            self.front = self.front.next
+            del temp
+            return data
 
     def peek(self):
-        pass
+        if self.front == None:
+            return None
+        else:
+            return self.front.data
 
 
 # Test code
