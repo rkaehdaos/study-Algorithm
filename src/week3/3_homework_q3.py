@@ -1,4 +1,4 @@
-#q3
+# q3
 '''
 다음은 Tree 자료구조를 순회하는 방법 중, Pre-order 순회 방법을 설명한 것이다.
 자료구조의 순회란, 자료구조에 속한 모든 data를 한 번씩 접근하는 것이다.
@@ -26,7 +26,11 @@ class Tree:
         self.root = root
 
     def preorder(self):
-        pass
+        if self.root is not None:
+            print(self.root.data, end=' ')
+            Tree(self.root.left).preorder()
+            Tree(self.root.right).preorder()
+        return
 
 
 # Test code
