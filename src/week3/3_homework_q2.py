@@ -71,9 +71,13 @@ class Calculator:
             "-": lambda x, y: y - x,
         }
 
-        for token in string.replace(' ', ''):
+        for token in string.split(' '):
+            print('토큰 : ',token)
             if token not in operands:
-                self.stack.push(int(token))
+                if '.' in token:
+                    self.stack.push(float(token))
+                else:
+                    self.stack.push(int(token))
             else:
                 self.stack.push(FUNC[token](self.stack.pop(), self.stack.pop()))
         return self.stack.pop()
