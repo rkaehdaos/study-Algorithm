@@ -19,6 +19,33 @@ Stack의 특성을 이용하면 후위 표기법으로 작성된 수식을 계�
 후위 표기법으로 표기된 수식을 계산하는 메소드 `calculate()`을 완성하시오.
 '''
 
+# 완전 괜찮은 모범답안 같이 보이는거
+'''
+def calc_expr(expStr):
+    tokens = parse_expr(expStr)
+    OP = ("*", "/", "+", "-",)
+    FUNC = {
+        "*": lambda x, y: y * x,
+        "/": lambda x, y: y / x,
+        "+": lambda x, y: y + x,
+        "-": lambda x, y: y - x,
+    }
+    stack = []
+
+    for item in tokens:
+        if item not in OP:
+            if '.' in item:
+                stack.append(float(item))
+            else:
+                stack.append(int(item))
+        else:
+            x = stack.pop()
+            y = stack.pop()
+            stack.append(FUNC[item](x, y))
+
+    return stack.pop()
+'''
+
 
 class Stack:
     def __init__(self):
@@ -36,8 +63,20 @@ class Calculator:
         self.stack = Stack()
 
     def calculate(self, string):
-        pass
+        operands = ('*', '/', '+', '-')
+        FUNC = {
+            "*": lambda x, y: y * x,
+            "/": lambda x, y: y / x,
+            "+": lambda x, y: y + x,
+            "-": lambda x, y: y - x,
+        }
 
+        for token in string.replace(' ', ''):
+            if token not in operands:
+                self.stack.push(int(token))
+            else:
+                self.stack.push(FUNC[token](self.stack.pop(), self.stack.pop()))
+        return self.stack.pop()
 
 # Test code
 calc = Calculator()
