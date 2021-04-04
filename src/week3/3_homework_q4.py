@@ -34,8 +34,8 @@ class Node:
 
 class ChainedHashTable(HashTable):
     def set(self, key, value):
-        if self.table[hash_func(key)] != None:
-            node = self.table[hash_func(key)]
+        node = self.table[hash_func(key)]
+        if node != None:
             while node.next:
                 if node.key == key:
                     node.data = value
@@ -46,15 +46,12 @@ class ChainedHashTable(HashTable):
             self.table[hash_func(key)] = Node(key, value)
 
     def get(self, key):
-        if self.table[hash_func(key)] != None:
-            node = self.table[hash_func(key)]
-            while node:
-                if node.key == key:
-                    return node.data
-                node = node.next
-            return None
-        else:
-            return None
+        node = self.table[hash_func(key)]
+        while node:
+            if node.key == key:
+                return node.data
+            node = node.next
+        return None
 
 # Test code
 
