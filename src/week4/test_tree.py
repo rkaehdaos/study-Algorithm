@@ -29,18 +29,19 @@ class TreeMgmt:
                 else:
                     self.current_node.right = Node(value)
                     break
-        print('end')
 
     # 검색
     def search(self, value):
         self.current_node = self.head
         while self.current_node:
             if self.current_node.value == value:
+                print('찾음')
                 return self.current_node
             elif value < self.current_node.value:
                 self.current_node = self.current_node.left
             else:
                 self.current_node = self.current_node.right
+        print('못찾음')
         return None
 
     # 순회
@@ -53,6 +54,7 @@ class TreeMgmt:
                 recursion(node.right)
 
         recursion(self.head)
+        print()
 
     # 삭제
     def delete(self, value):
@@ -77,13 +79,14 @@ class TreeMgmt:
             if self.current_node.value == value:
                 searched = True
                 break
-            elif value < self.current_node.left:
+            elif value < self.current_node.value:
                 self.parent = self.current_node
                 self.current_node = self.current_node.left
             else:
                 self.parent = self.current_node
                 self.current_node = self.current_node.right
         if searched == False:
+            print('지울 값이 없습니다')
             return False
 
         # leaf일 경우
@@ -93,19 +96,108 @@ class TreeMgmt:
             else:
                 self.parent.right = None
 
+        # 자식이 1개 일 때
+        elif self.current_node.left != None and self.current_node.right == None:
+            if value < self.parent.value:
+                self.parent.left = self.current_node.left
+            else:
+                self.parent.right = self.current_node.left
+        elif self.current_node.left == None and self.current_node.right != None:
+            if value < self.parent.value:
+                self.parent.left = self.current_node.right
+            else:
+                self.parent.right = self.current_node.right
+
+        # 자식이 2
+        elif self.current_node.left != None and self.current_node.right != None:
+            # 삭제 노드가 부모의 left일 때
+            if value < self.parent.value:
+                # 1번 전략 아이템 찾기 : 우측 중 가장 작은 노드
+                # 헤드 초기화 했던 것처럼 초기화
+                self.change_node = self.current_node.right
+                self.change_node_parent = self.current_node.right
+                while self.change_node.left:
+                    self.change_node_parent = self.change_node
+                    self.change_node = self.change_node.left
+                # 1번 자식의 우측에 자식이 있 때( 좌측엔 있을 수가 없음:가장 작은 값이므로)
+                if self.change_node.right:
+                    self.change_node_parent.left = self.change_node.right
+                # 자식이 없으면 1번 전략 노드의 부모의 left를 끊는다
+                else:
+                    self.change_node_parent.left = None
+                ## 세팅
+                self.parent.left = self.change_node
+                self.change_node.right = self.current_node.right
+                self.change_node.left = self.current_node.left
+
+            # 삭제 노드가 부모의 right 일 때
+            else:
+                #### 공통 부분 발견
+                self.change_node = self.current_node.right
+                self.change_node_parent = self.current_node.right
+                while self.change_node.left:
+                    self.change_node_parent = self.change_node
+                    self.change_node = self.change_node.left
+                # 1번 자식의 우측에 자식이 있 때( 좌측엔 있을 수가 없음:가장 작은 값이므로)
+                if self.change_node.right:
+                    self.change_node_parent.left = self.change_node.right
+                # 자식이 없으면 1번 전략 노드의 부모의 left를 끊는다
+                else:
+                    self.change_node_parent.left = None
+                ## 세팅
+                self.parent.right = self.change_node
+                self.change_node.right = self.current_node.right
+                self.change_node.left = self.current_node.left
+
+        # 1번 전략 의 자식이 없을 때
+        # 1번 자식의 우측에 자식이 있 때( 좌측엔 있을 수가 없음:가장 작은 값이므로)
+        return True
+
 
 # 초기화
 print('------------초기화------------')
-head = Node(3)
-BST = TreeMgmt(head)
+BST = TreeMgmt(Node(50))
 print('------------삽입------------')
-BST.insert(2)
-BST.insert(4)
-BST.insert(5)
-BST.insert(1)
-print('------------탐색------------')
-for i in range(1, 6):
-    print('%d번 째: ' % i, BST.search(i).value)
-
+BST_DATA = {25, 75, 13, 38, 62, 88, 6, 19, 81, 95, 3, 16, 22, 92, 98, 14, 17, 91, 93, 94, 44, 58, 66, 32, 99}
+for i in BST_DATA:
+    BST.insert(i)
 print('------------순회------------')
+BST.inorder()
+print('------------탐색------------')
+BST.search(19)
+BST.search(100)
+
+print('------------삭제------------')
+
+print('------------삭제 leaf------------')
+BST.inorder()
+BST.delete(14)
+BST.inorder()
+BST.delete(91)
+BST.inorder()
+
+print('------------자식1------------')
+BST.inorder()
+print('-------부모의 우측 자식--------')
+BST.delete(98) # 부모의 우측 자식
+BST.inorder()
+print('-------부모의 좌측 자식--------')
+
+BST.delete(6) # 부모의 좌측 자식
+BST.inorder()
+
+print('------------자식2, 삭제노드가 부모의 left------------')
+print('------------1번 전력의 자식이 없을떄------------')
+BST.delete(62)
+BST.inorder()
+print('------------1번 전력의 우측 자식 존재------------')
+BST.delete(13)
+BST.inorder()
+
+print('------------자식2, 삭제노드가 부모의 right------------')
+print('------------1번 전력의 자식이 없을떄------------')
+BST.delete(38)
+BST.inorder()
+print('------------1번 전력의 우측 자식 존재------------')
+BST.delete(95)
 BST.inorder()
