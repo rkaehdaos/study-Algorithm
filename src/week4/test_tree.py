@@ -32,16 +32,32 @@ class TreeMgmt:
         print('end')
 
     # 검색
-    def search(self,value):
-        self.current_node=self.head
+    def search(self, value):
+        self.current_node = self.head
         while self.current_node:
-            if self.current_node.value==value:
+            if self.current_node.value == value:
                 return self.current_node
             elif value < self.current_node.value:
-                self.current_node=self.current_node.left
+                self.current_node = self.current_node.left
             else:
-                self.current_node=self.current_node.right
+                self.current_node = self.current_node.right
         return None
+
+    # 삭제
+    def delete(self, value):
+        # leaf 노드 :삭제 노드의  부모가 해당 노드를 가르키는 곳에 None
+        # 자식이 1 : 삭제 노드의  부모가 자식을 가르키도록
+        # 자식이 2 : 전략 2개중 하나를 채택 해야함, 여기서는 1번
+            # 1 - 삭제 노드 우측 자식중 가장 작은 값을 부모가 가르키도록 ---  1번 전략 채택
+            # 2 - 삭제 노드 촤측 자식중 가장 큰 값을 부모가 가르키도록
+                # 삭제 노드가 부모의 left일 때
+                    # 1번 전략 의 자식이 없을 때
+                    # 1번 자식의 우측에 자식이 있 때( 좌측엔 있을 수가 없음:가장 작은 값이므로)
+                # 삭제 노드가 부모의 left일 때
+                    # 1번 전략 의 자식이 없을 때
+                    # 1번 자식의 우측에 자식이 있 때( 좌측엔 있을 수가 없음:가장 작은 값이므로)
+
+
 
 # 초기화
 head = Node(3)
@@ -52,8 +68,5 @@ BST.insert(5)
 BST.insert(1)
 
 # 탐색
-for i in range(1,6):
+for i in range(1, 6):
     print(BST.search(i).value)
-
-
-
