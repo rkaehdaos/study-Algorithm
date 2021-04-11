@@ -6,7 +6,10 @@ N개의 문자열로 이루어진 List에서 전체 문자열이 앞 n개 문자
 
 
 def solution(a):
-    return 0
+    cnt = 0
+    while len({a[i][cnt] for i in range(len(a))}) == 1:
+        cnt += 1
+    return cnt
 
 
 # Test code

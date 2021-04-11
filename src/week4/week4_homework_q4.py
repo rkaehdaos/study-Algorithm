@@ -16,7 +16,20 @@
 
 
 def solution(n):
-    return True
+    def getCal(n):
+        sum = 0
+        while n > 0:
+            sum += (n % 10) * (n % 10)
+            n = n // 10
+        return sum
+
+    answer = set()
+    while n not in answer:
+        answer.add(n)
+        n = getCal(n)
+        if (n == 1):
+            return True
+    return False
 
 
 # Test code

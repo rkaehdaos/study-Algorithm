@@ -10,7 +10,13 @@
 
 
 def countUniques(a):
-    pass
+    cnt=0
+    temp=None
+    for item in a:
+        if temp!=item:
+            temp=item
+            cnt+=1
+    return cnt
 
 
 # Test code
