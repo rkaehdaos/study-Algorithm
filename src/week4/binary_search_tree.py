@@ -7,7 +7,7 @@ class Node:
         self.right = None
 
 
-class TreeMgmt:
+class BinarySearchTree:
     def __init__(self, head):
         if isinstance(head, Node):
             self.head = head
@@ -156,7 +156,7 @@ class TreeMgmt:
 
 # 초기화
 print('------------초기화------------')
-BST = TreeMgmt(Node(50))
+BST = BinarySearchTree(Node(50))
 print('------------삽입------------')
 BST_DATA = {25, 75, 13, 38, 62, 88, 6, 19, 81, 95, 3, 16, 22, 92, 98, 14, 17, 91, 93, 94, 44, 58, 66, 32, 99}
 for i in BST_DATA:
