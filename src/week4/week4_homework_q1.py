@@ -22,13 +22,40 @@ Min Heap을 이용한 Priority Queue의 특징
 
 class PriorityQueue:
     def __init__(self):
-        pass
+        self.heap_array = list()
+        self.heap_array.append(None)
 
     def is_empty(self):
-        pass
+        if len(self.heap_array) <= 1:
+            return True
+        else:
+            return False
+
+    def move_up(self, inserted_idx):
+        if inserted_idx <= 1:
+            return False
+        parent_idx = inserted_idx // 2
+        if self.heap_array[inserted_idx][0] < self.heap_array[parent_idx][0]:
+            return True
+        else:
+            return False
+
+    def move_down(self, popped_idx):
+       pass
 
     def put(self, data):
-        pass
+        if len(self.heap_array) == 1:
+            self.heap_array.append(data)
+            return True
+        self.heap_array.append(data)
+        inserted_idx = len(self.heap_array) - 1
+        print('데이터와 인덱스 : ', data, inserted_idx)
+        while self.move_up(inserted_idx):
+            parent_idx = inserted_idx // 2
+            self.heap_array[inserted_idx], self.heap_array[parent_idx] = self.heap_array[parent_idx], self.heap_array[
+                inserted_idx]
+            inserted_idx = parent_idx
+        return True
 
     def get(self):
         pass
