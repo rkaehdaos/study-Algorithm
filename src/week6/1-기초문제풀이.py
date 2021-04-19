@@ -33,19 +33,13 @@
 
 '''
 
-
-def solution(str):
-    target = str.split()
-    a = sorted(target)
-    b = sorted(target, reverse=True)
-    if target == a:
-        print('ascending')
-    elif target == b:
-        print('descending')
-    else:
-        print('mixed')
-# 15분 제한에서 1분 18초 남기고 완료
-
-solution('1 2 3 4 5 6 7 8')
-solution('8 7 6 5 4 3 2 1')
-solution('8 1 7 2 6 3 5 4')
+import sys
+target = sys.stdin.readline().rstrip().split()
+a = sorted(target)
+b = sorted(target, reverse=True)
+if target == a:
+    print('ascending')
+elif target == b:
+    print('descending')
+else:
+    print('mixed')
