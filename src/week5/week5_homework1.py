@@ -35,4 +35,5 @@ matrix2 = [
 target2 = 13
 
 print(searchMatrix(matrix1, target1))
-print(searchMatrix(matrix2, target2))
+print(searchMatrix(matrix2, target2)
+print(searchMatrix(matrix, target))
